@@ -1,0 +1,16 @@
+{
+  "base": "Qwen/Qwen2.5-1.5B-Instruct",
+  "run_name": "lora_r16",
+  "data": "data/processed",
+  "epochs": 3,
+  "lr": 0.0002,
+  "r": 16,
+  "alpha": 32,
+  "dropout": 0.05,
+  "bs": 2,
+  "accum": 8,
+  "max_len": 1024,
+  "warmup": 0.1,
+  "seed": 42,
+  "grad_ckpt": true
+}
