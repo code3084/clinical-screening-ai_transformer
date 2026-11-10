@@ -95,3 +95,8 @@ def parse_output(text: str, criterion_type: str, n_sentences: int):
             continue
         return label, ids, True
     return None, [], False
+
+
+def load_jsonl(path):
+    with open(path) as f:
+        return [json.loads(line) for line in f if line.strip()]
