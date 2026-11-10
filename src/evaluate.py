@@ -17,7 +17,7 @@ from .common import ALL_LABELS, LABELS_BY_TYPE, load_jsonl, parse_output
 from .metrics import classification_report, evidence_scores
 
 
-def generate_all(model, tok, recs, batch_size, max_new_tokens):
+def generate_all(model, tok, recs, batch_size, max_new_tokens, rep_pen=None):
     import torch
     from .model_utils import chat_prompt
     prompts = [chat_prompt(tok, r["sentences"], r["criterion_type"], r["criterion_text"]) for r in recs]
@@ -28,8 +28,9 @@ def generate_all(model, tok, recs, batch_size, max_new_tokens):
             idx = order[s:s + batch_size]
             enc = tok([prompts[i] for i in idx], return_tensors="pt", padding=True,
                       add_special_tokens=False).to(model.device)
+            extra = {} if rep_pen is None else dict(repetition_penalty=rep_pen)   # None = library default (generation_config)
             gen = model.generate(**enc, max_new_tokens=max_new_tokens, do_sample=False,
-                                 temperature=None, top_p=None, top_k=None, pad_token_id=tok.pad_token_id)
+                                 temperature=None, top_p=None, top_k=None, pad_token_id=tok.pad_token_id, **extra)
             for i, t in zip(idx, tok.batch_decode(gen[:, enc.input_ids.shape[1]:], skip_special_tokens=True)):
                 outs[i] = t
     return outs
@@ -60,13 +61,15 @@ def main():
     ap.add_argument("--data", default="data/processed")
     ap.add_argument("--batch-size", type=int, default=8)
     ap.add_argument("--max-new-tokens", type=int, default=48)
+    ap.add_argument("--repetition-penalty", type=float, default=None,
+                    help="None = whatever generation_config.json of the base model sets; 1.0 = pure greedy")
     ap.add_argument("--allow-test", action="store_true")
     a = ap.parse_args()
     if a.split == "test" and not a.allow_test:
         sys.exit("Refusing to touch the test split without --allow-test (final evaluation only).")
 
     recs = load_jsonl(f"{a.data}/{a.split}.jsonl")
-    t0, raws = time.time(), [None] * len(recs)
+    t0, raws, gc_rp = time.time(), [None] * len(recs), None
     if a.mode == "majority":
         maj = {t: Counter(r["gold_label"] for r in load_jsonl(f"{a.data}/train.jsonl")
                           if r["criterion_type"] == t).most_common(1)[0][0] for t in LABELS_BY_TYPE}
@@ -75,7 +78,8 @@ def main():
         from .model_utils import load_model, load_tokenizer
         tok = load_tokenizer(a.base)
         model = load_model(a.base, a.adapter)
-        raws = generate_all(model, tok, recs, a.batch_size, a.max_new_tokens)
+        raws = generate_all(model, tok, recs, a.batch_size, a.max_new_tokens, a.repetition_penalty)
+        gc_rp = getattr(model.generation_config, 'repetition_penalty', None)
         preds = []
         for r, t in zip(recs, raws):
             lab, ev, ok = parse_output(t, r["criterion_type"], len(r["sentences"]))
@@ -83,7 +87,8 @@ def main():
 
     res = score(recs, preds)
     res["meta"] = dict(split=a.split, mode=a.mode, base=a.base, adapter=a.adapter, batch_size=a.batch_size,
-                       max_new_tokens=a.max_new_tokens, decoding="greedy", seconds=time.time() - t0, n=len(recs))
+                       max_new_tokens=a.max_new_tokens, decoding="greedy (do_sample=False)",
+                       repetition_penalty_override=a.repetition_penalty, generation_config_repetition_penalty=gc_rp, seconds=time.time() - t0, n=len(recs))
     out = Path("results") / a.run_name
     out.mkdir(parents=True, exist_ok=True)
     (out / f"{a.split}_metrics.json").write_text(json.dumps(res, indent=2))

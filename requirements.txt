@@ -1,5 +1,9 @@
+torch
+transformers
+peft
+accelerate
 datasets
 pandas
 numpy
-transformers
+matplotlib
 pytest

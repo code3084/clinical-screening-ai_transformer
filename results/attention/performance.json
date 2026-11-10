@@ -1,0 +1,231 @@
+{
+ "device": "cuda",
+ "gpu": "Tesla T4",
+ "rows": [
+  {
+   "L": 256,
+   "impl": "reference",
+   "ms": 0.7326942000418057,
+   "peak_extra_mb": 6.01171875,
+   "dtype": "torch.float16",
+   "max_err_vs_reference": 0.0
+  },
+  {
+   "L": 256,
+   "impl": "tiled_128x128",
+   "ms": 2.297422599940546,
+   "peak_extra_mb": 3.021484375,
+   "dtype": "torch.float16",
+   "max_err_vs_reference": 0.00048828125
+  },
+  {
+   "L": 256,
+   "impl": "sdpa_default",
+   "ms": 0.23784300001352676,
+   "peak_extra_mb": 0.2509765625,
+   "dtype": "torch.float16",
+   "max_err_vs_reference": 0.001953125
+  },
+  {
+   "L": 256,
+   "impl": "sdpa_math",
+   "ms": 0.6858608000129607,
+   "peak_extra_mb": 6.75244140625,
+   "dtype": "torch.float16",
+   "max_err_vs_reference": 0.000244140625
+  },
+  {
+   "L": 256,
+   "impl": "sdpa_mem_efficient",
+   "ms": 0.25065039994842664,
+   "peak_extra_mb": 0.2509765625,
+   "dtype": "torch.float16",
+   "max_err_vs_reference": 0.001953125
+  },
+  {
+   "L": 256,
+   "impl": "sdpa_flash",
+   "error": "No available kernel. Aborting execution."
+  },
+  {
+   "L": 512,
+   "impl": "reference",
+   "ms": 1.3265733999105578,
+   "peak_extra_mb": 24.0234375,
+   "dtype": "torch.float16",
+   "max_err_vs_reference": 0.0
+  },
+  {
+   "L": 512,
+   "impl": "tiled_128x128",
+   "ms": 6.053878000057011,
+   "peak_extra_mb": 3.521484375,
+   "dtype": "torch.float16",
+   "max_err_vs_reference": 0.000244140625
+  },
+  {
+   "L": 512,
+   "impl": "sdpa_default",
+   "ms": 0.2953604000140331,
+   "peak_extra_mb": 0.5009765625,
+   "dtype": "torch.float16",
+   "max_err_vs_reference": 0.0009765625
+  },
+  {
+   "L": 512,
+   "impl": "sdpa_math",
+   "ms": 1.1991053999281576,
+   "peak_extra_mb": 23.00439453125,
+   "dtype": "torch.float16",
+   "max_err_vs_reference": 0.000244140625
+  },
+  {
+   "L": 512,
+   "impl": "sdpa_mem_efficient",
+   "ms": 0.3146025999740232,
+   "peak_extra_mb": 0.5009765625,
+   "dtype": "torch.float16",
+   "max_err_vs_reference": 0.0009765625
+  },
+  {
+   "L": 512,
+   "impl": "sdpa_flash",
+   "error": "No available kernel. Aborting execution."
+  },
+  {
+   "L": 1024,
+   "impl": "reference",
+   "ms": 3.5005696000098396,
+   "peak_extra_mb": 96.046875,
+   "dtype": "torch.float16",
+   "max_err_vs_reference": 0.0
+  },
+  {
+   "L": 1024,
+   "impl": "tiled_128x128",
+   "ms": 20.637010400014333,
+   "peak_extra_mb": 4.521484375,
+   "dtype": "torch.float16",
+   "max_err_vs_reference": 0.000244140625
+  },
+  {
+   "L": 1024,
+   "impl": "sdpa_default",
+   "ms": 0.42149480000261974,
+   "peak_extra_mb": 1.0009765625,
+   "dtype": "torch.float16",
+   "max_err_vs_reference": 0.0009765625
+  },
+  {
+   "L": 1024,
+   "impl": "sdpa_math",
+   "ms": 2.8776286000265827,
+   "peak_extra_mb": 84.00830078125,
+   "dtype": "torch.float16",
+   "max_err_vs_reference": 0.00048828125
+  },
+  {
+   "L": 1024,
+   "impl": "sdpa_mem_efficient",
+   "ms": 0.45347799996307003,
+   "peak_extra_mb": 1.0009765625,
+   "dtype": "torch.float16",
+   "max_err_vs_reference": 0.0009765625
+  },
+  {
+   "L": 1024,
+   "impl": "sdpa_flash",
+   "error": "No available kernel. Aborting execution."
+  },
+  {
+   "L": 2048,
+   "impl": "reference",
+   "ms": 12.48667600002591,
+   "peak_extra_mb": 384.09375,
+   "dtype": "torch.float16",
+   "max_err_vs_reference": 0.0
+  },
+  {
+   "L": 2048,
+   "impl": "tiled_128x128",
+   "ms": 74.4853325999884,
+   "peak_extra_mb": 7.517578125,
+   "dtype": "torch.float16",
+   "max_err_vs_reference": 0.00048828125
+  },
+  {
+   "L": 2048,
+   "impl": "sdpa_default",
+   "ms": 0.7163962000049651,
+   "peak_extra_mb": 2.0009765625,
+   "dtype": "torch.float16",
+   "max_err_vs_reference": 0.001953125
+  },
+  {
+   "L": 2048,
+   "impl": "sdpa_math",
+   "ms": 8.681367999997747,
+   "peak_extra_mb": 320.01611328125,
+   "dtype": "torch.float16",
+   "max_err_vs_reference": 0.000244140625
+  },
+  {
+   "L": 2048,
+   "impl": "sdpa_mem_efficient",
+   "ms": 0.6910645999596454,
+   "peak_extra_mb": 2.0009765625,
+   "dtype": "torch.float16",
+   "max_err_vs_reference": 0.001953125
+  },
+  {
+   "L": 2048,
+   "impl": "sdpa_flash",
+   "error": "No available kernel. Aborting execution."
+  },
+  {
+   "L": 4096,
+   "impl": "reference",
+   "ms": 40.89874619994589,
+   "peak_extra_mb": 1536.1875,
+   "dtype": "torch.float16",
+   "max_err_vs_reference": 0.0
+  },
+  {
+   "L": 4096,
+   "impl": "tiled_128x128",
+   "ms": 350.6857682000373,
+   "peak_extra_mb": 13.517578125,
+   "dtype": "torch.float16",
+   "max_err_vs_reference": 0.000244140625
+  },
+  {
+   "L": 4096,
+   "impl": "sdpa_default",
+   "ms": 2.7944879999722616,
+   "peak_extra_mb": 4.0009765625,
+   "dtype": "torch.float16",
+   "max_err_vs_reference": 0.001953125
+  },
+  {
+   "L": 4096,
+   "impl": "sdpa_math",
+   "ms": 35.89868919993933,
+   "peak_extra_mb": 1248.03173828125,
+   "dtype": "torch.float16",
+   "max_err_vs_reference": 0.000244140625
+  },
+  {
+   "L": 4096,
+   "impl": "sdpa_mem_efficient",
+   "ms": 1.8274766000104137,
+   "peak_extra_mb": 4.0009765625,
+   "dtype": "torch.float16",
+   "max_err_vs_reference": 0.001953125
+  },
+  {
+   "L": 4096,
+   "impl": "sdpa_flash",
+   "error": "No available kernel. Aborting execution."
+  }
+ ]
+}
