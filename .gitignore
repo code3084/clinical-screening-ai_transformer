@@ -1,5 +1,9 @@
 __pycache__/
 *.pyc
+.venv/
+.ipynb_checkpoints/
+runs/*/best/
 runs/*/last/
 *.safetensors
 *.bin
+*.pt
